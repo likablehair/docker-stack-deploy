@@ -146,7 +146,7 @@ if [[ -z "${REMOTE_USER}" ]]; then
   echo "Input remote_user is required!"
   exit 1
 fi
-if [[ -z "${REMOTE_PRIVATE_KEY}" && -z "${REMOTE_PRIVATE_KEY_FOLDER}" ]]; then
+if [[ -z "${REMOTE_PRIVATE_KEY}" ]] && [[ -z "${REMOTE_PRIVATE_KEY_FOLDER}" ]]; then
   echo "Input private_key is required!"
   exit 1
 fi
