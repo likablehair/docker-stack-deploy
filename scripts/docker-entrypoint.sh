@@ -4,6 +4,7 @@ set -e
 # Use root home folder
 SSH_DIR="/root/.ssh"
 SSH_KEY="${SSH_DIR}/docker"
+SSH_KEY_CERT="${SSH_DIR}/docker-cert.pub"
 KNOWN_HOSTS="${SSH_DIR}/known_hosts"
 ENV_FILE_PATH="/root/.env"
 
@@ -18,7 +19,35 @@ configure_ssh() {
 }
 
 configure_ssh_key() {
-  printf '%s' "$REMOTE_PRIVATE_KEY" > "${SSH_KEY}"
+  if [ -z "${REMOTE_PRIVATE_KEY_FOLDER}" ]; then
+    printf '%s' "$REMOTE_PRIVATE_KEY" > "${SSH_KEY}"
+
+    if [ ${WITH_CERT} ]; then
+      printf '%s' "$REMOTE_PRIVATE_KEY_CERT" > "${SSH_KEY_CERT}"
+      chmod 600 "${SSH_KEY_CERT}"
+    fi
+
+  else
+    if [ ! -d "${PRIVATE_KEY_FOLDER}" ]; then
+      echo "Private key folder ${PRIVATE_KEY_FOLDER} does not exist."
+      exit 1
+    fi
+    if [ ! -f "${PRIVATE_KEY_FOLDER}/id_rsa" ]; then
+      echo "Private key id_rsa does not exist in ${PRIVATE_KEY_FOLDER}."
+      exit 1
+    fi
+    cp "${PRIVATE_KEY_FOLDER}/id_rsa" "${SSH_KEY}"
+
+    if [ ${WITH_CERT} ]; then
+      if [ ! -f "${PRIVATE_KEY_FOLDER}/id_rsa-cer.pub" ]; then
+        echo "Private key certificate id_rsa-cer.pub does not exist in ${PRIVATE_KEY_FOLDER}."
+        exit 1
+      fi
+      cp "${PRIVATE_KEY_FOLDER}/id_rsa-cer.pub" "${SSH_KEY_CERT}"
+      chmod 600 "${SSH_KEY_CERT}"
+    fi
+  fi
+
   lastLine=$(tail -n 1 "${SSH_KEY}")
   if [ "${lastLine}" != "" ]; then
     printf '\n' >> "${SSH_KEY}";

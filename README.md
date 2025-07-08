@@ -31,7 +31,10 @@ GitHub Action and Docker image used to deploy a Docker stack on a Docker Swarm.
 | `remote_host` | `REMOTE_HOST` | Hostname or address of the machine running the Docker Swarm manager node | ✅ | |
 | `remote_port` | `REMOTE_PORT` | SSH port to connect on the the machine running the Docker Swarm manager node. | | **22** |
 | `remote_user` | `REMOTE_USER` | User with SSH and Docker privileges on the machine running the Docker Swarm manager node. | ✅ | |
-| `remote_private_key` | `REMOTE_PRIVATE_KEY` | Private key used for ssh authentication. | ✅ | |
+| `with_cert` | `WITH_CERT` | Use for CA keys. | | **false** |
+| `remote_private_key` | `REMOTE_PRIVATE_KEY` | Private key used for ssh authentication. | |
+| `remote_private_key_cert` | `REMOTE_PRIVATE_KEY_CERT` | Private key certificate used for ssh authentication. | | |
+| `remote_private_key_folder` | `REMOTE_PRIVATE_KEY_FOLDER` | Folder containing the private key and certificate. It override remote_private_key e remote_private_key_cert options | | |
 | `deploy_timeout` | `DEPLOY_TIMEOUT` | Seconds, to wait until the deploy finishes | | **600** |
 | `stack_file` | `STACK_FILE` | Path to the stack file used in the deploy. | ✅ | |
 | `stack_name` | `STACK_NAME` | Name of the stack to be deployed. | ✅ | |
