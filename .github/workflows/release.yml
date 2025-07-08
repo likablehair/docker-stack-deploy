@@ -8,7 +8,7 @@ on:
       - 'v*.*.*'
 
 env:
-  IMAGE_NAME: ghcr.io/kitconcept/docker-stack-deploy
+  IMAGE_NAME: cr.likablehair.it/docker-stack-deploy
 
 jobs:
 
@@ -43,9 +43,9 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: cr.likablehair.it
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build and push
         uses: docker/build-push-action@v3
