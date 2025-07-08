@@ -1,11 +1,12 @@
 name: Release Image
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - 'main'
-    tags:
-      - 'v*.*.*'
+    #branches:
+    #  - 'main'
+    #tags:
+    #  - 'v*.*.*'
 
 env:
   IMAGE_NAME: cr.likablehair.it/docker-stack-deploy

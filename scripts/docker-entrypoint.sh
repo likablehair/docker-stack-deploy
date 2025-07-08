@@ -19,33 +19,11 @@ configure_ssh() {
 }
 
 configure_ssh_key() {
-  if [ -z "${REMOTE_PRIVATE_KEY_FOLDER}" ]; then
-    printf '%s' "$REMOTE_PRIVATE_KEY" > "${SSH_KEY}"
+  printf '%s' "$REMOTE_PRIVATE_KEY" > "${SSH_KEY}"
 
-    if [ ${WITH_CERT} ]; then
-      printf '%s' "$REMOTE_PRIVATE_KEY_CERT" > "${SSH_KEY_CERT}"
-      chmod 600 "${SSH_KEY_CERT}"
-    fi
-
-  else
-    if [ ! -d "${PRIVATE_KEY_FOLDER}" ]; then
-      echo "Private key folder ${PRIVATE_KEY_FOLDER} does not exist."
-      exit 1
-    fi
-    if [ ! -f "${PRIVATE_KEY_FOLDER}/id_rsa" ]; then
-      echo "Private key id_rsa does not exist in ${PRIVATE_KEY_FOLDER}."
-      exit 1
-    fi
-    cp "${PRIVATE_KEY_FOLDER}/id_rsa" "${SSH_KEY}"
-
-    if [ ${WITH_CERT} ]; then
-      if [ ! -f "${PRIVATE_KEY_FOLDER}/id_rsa-cer.pub" ]; then
-        echo "Private key certificate id_rsa-cer.pub does not exist in ${PRIVATE_KEY_FOLDER}."
-        exit 1
-      fi
-      cp "${PRIVATE_KEY_FOLDER}/id_rsa-cer.pub" "${SSH_KEY_CERT}"
-      chmod 600 "${SSH_KEY_CERT}"
-    fi
+  if [ ${WITH_CERT} ]; then
+    printf '%s' "$REMOTE_PRIVATE_KEY_CERT" > "${SSH_KEY_CERT}"
+    chmod 600 "${SSH_KEY_CERT}"
   fi
 
   lastLine=$(tail -n 1 "${SSH_KEY}")
@@ -146,7 +124,7 @@ if [[ -z "${REMOTE_USER}" ]]; then
   echo "Input remote_user is required!"
   exit 1
 fi
-if [[ -z "${REMOTE_PRIVATE_KEY}" ]] && [[ -z "${REMOTE_PRIVATE_KEY_FOLDER}" ]]; then
+if [[ -z "${REMOTE_PRIVATE_KEY}" ]]; then
   echo "Input private_key is required!"
   exit 1
 fi

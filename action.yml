@@ -39,10 +39,6 @@ inputs:
     description: 'Public key used for ssh authentication'
     required: false
     default: ""
-  remote_private_key_folder:
-    description: 'Folder where the private key is stored'
-    required: false
-    default: "/root/.ssh"
   deploy_timeout:
     description: "Timeout for the deploy check (in seconds)"
     required: false
