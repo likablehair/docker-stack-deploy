@@ -34,7 +34,7 @@ inputs:
     default: "false"
   remote_private_key:
     description: 'Private key used for ssh authentication'
-    required: false
+    required: true
   remote_private_key_cert:
     description: 'Public key used for ssh authentication'
     required: false

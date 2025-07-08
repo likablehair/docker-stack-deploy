@@ -68,7 +68,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy
-        uses: kitconcept/docker-stack-deploy@v1.0.1
+        uses: https://gitea.likablehair.it/Likablehair/docker-stack-deploy@v1.0.0
         with:
           remote_host: ${{ secrets.REMOTE_HOST }}
           remote_user: ${{ secrets.REMOTE_USER }}
@@ -98,7 +98,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy
-        uses: kitconcept/docker-stack-deploy@v1.0.1
+        uses: https://gitea.likablehair.it/Likablehair/docker-stack-deploy@v1.0.0
         with:
           registry: "ghcr.io"
           username: ${{ secrets.GHCR_USERNAME }}
@@ -170,7 +170,7 @@ deploy:
     REMOTE_PRIVATE_KEY: "${DEPLOY_KEY}"
     STACK_FILE: stacks/app.yml
     STACK_NAME: app
-    DEPLOY_IMAGE: ghcr.io/kitconcept/docker-stack-deploy:latest
+    DEPLOY_IMAGE: cr.likablehair.it/docker-stack-deploy:latest
   script:
     - docker pull ${DEPLOY_IMAGE}
     - docker run --rm

@@ -5,8 +5,8 @@ on:
   push:
     #branches:
     #  - 'main'
-    #tags:
-    #  - 'v*.*.*'
+    tags:
+      - 'v*.*.*'
 
 env:
   IMAGE_NAME: cr.likablehair.it/docker-stack-deploy
