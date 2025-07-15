@@ -36,17 +36,25 @@ configure_ssh_key() {
 }
 
 configure_env_file() {
-  printf '%s' "$ENV_FILE" > "${ENV_FILE_PATH}"
+  if [ "${DEBUG}" != "0" ]; then
+    echo "Environment Variables Already present: ${ENV_FILE_PATH}"
+
+    echo "Environment Variables: Adding additional values from ${ENV_FILE}"
+    cat "${ENV_FILE}"
+  fi
+  cat "$ENV_FILE" > "${ENV_FILE_PATH}"
   env_file_len=$(grep -v '^#' ${ENV_FILE_PATH}|grep -v '^$' -c)
   if [[ $env_file_len -gt 0 ]]; then
     echo "Environment Variables: Additional values"
     if [ "${DEBUG}" != "0" ]; then
       echo "Environment vars before: $(env|wc -l)"
+      echo "Environment vars values before: $(env)"
     fi
     # shellcheck disable=SC2046
     export $(grep -v '^#' ${ENV_FILE_PATH} | grep -v '^$' | xargs -d '\n')
     if [ "${DEBUG}" != "0" ]; then
       echo "Environment vars after: $(env|wc -l)"
+      echo "Environment vars values before: $(env)"
     fi
   fi
 }
