@@ -1,4 +1,3 @@
-
 name: 'Docker Stack Deploy Action'
 description: 'Deploy a Docker stack on a Docker Swarm'
 author: 'kitconcept GmbH'
@@ -63,7 +62,7 @@ inputs:
     default: "0"
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'cr.likablehair.it/docker-stack-deploy'
   env:
     REGISTRY: ${{ inputs.registry }}
     USERNAME: ${{ inputs.username }}
