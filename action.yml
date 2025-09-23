@@ -62,7 +62,7 @@ inputs:
     default: "0"
 runs:
   using: 'docker'
-  image: 'cr.likablehair.it/docker-stack-deploy'
+  image: 'gitea.likablehair.it/likablehair/docker-stack-deploy'
   env:
     REGISTRY: ${{ inputs.registry }}
     USERNAME: ${{ inputs.username }}
