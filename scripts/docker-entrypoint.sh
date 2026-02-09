@@ -19,32 +19,14 @@ configure_ssh() {
 }
 
 configure_ssh_key() {
-  if [ -z "$REMOTE_PRIVATE_KEY" ] && [ -z "$REMOTE_PRIVATE_KEY_FILE" ]; then
-    echo "Error: No Private Key provided. You must set either 'remote_private_key' or 'remote_private_key_file'."
-    exit 1
-  fi
-
   if [ -n "$REMOTE_PRIVATE_KEY_FILE" ]; then
-    if [ ! -f "$REMOTE_PRIVATE_KEY_FILE" ]; then
-      echo "Error: Private key file not found at path: $REMOTE_PRIVATE_KEY_FILE"
-      exit 1
-    fi
     cat "$REMOTE_PRIVATE_KEY_FILE" > "${SSH_KEY}"
   else
     printf '%s' "$REMOTE_PRIVATE_KEY" > "${SSH_KEY}"
   fi
 
   if [ "$WITH_CERT" = "true" ] || [ -n "$WITH_CERT" ] && [ "$WITH_CERT" != "false" ]; then
-    if [ -z "$REMOTE_PRIVATE_KEY_CERT" ] && [ -z "$REMOTE_PRIVATE_KEY_CERT_FILE" ]; then
-      echo "Error: Certificate authentication requested (with_cert=true), but no certificate provided."
-      exit 1
-    fi
-
     if [ -n "$REMOTE_PRIVATE_KEY_CERT_FILE" ]; then
-      if [ ! -f "$REMOTE_PRIVATE_KEY_CERT_FILE" ]; then
-        echo "Error: Certificate file not found at path: $REMOTE_PRIVATE_KEY_CERT_FILE"
-        exit 1
-      fi
       cat "$REMOTE_PRIVATE_KEY_CERT_FILE" > "${SSH_KEY_CERT}"
     else
       printf '%s' "$REMOTE_PRIVATE_KEY_CERT" > "${SSH_KEY_CERT}"
@@ -158,10 +140,28 @@ if [[ -z "${REMOTE_USER}" ]]; then
   echo "Input remote_user is required!"
   exit 1
 fi
-if [[ -z "${REMOTE_PRIVATE_KEY}" ]]; then
-  echo "Input private_key is required!"
+if [ -z "$REMOTE_PRIVATE_KEY" ] && [ -z "$REMOTE_PRIVATE_KEY_FILE" ]; then
+  echo "Error: No Private Key provided. You must set either 'remote_private_key' or 'remote_private_key_file'."
   exit 1
 fi
+
+if [ -n "$REMOTE_PRIVATE_KEY_FILE" ] && [ ! -f "$REMOTE_PRIVATE_KEY_FILE" ]; then
+  echo "Error: Private key file not found at path: $REMOTE_PRIVATE_KEY_FILE"
+  exit 1
+fi
+
+if [ "$WITH_CERT" = "true" ] || [ -n "$WITH_CERT" ] && [ "$WITH_CERT" != "false" ]; then
+  if [ -z "$REMOTE_PRIVATE_KEY_CERT" ] && [ -z "$REMOTE_PRIVATE_KEY_CERT_FILE" ]; then
+    echo "Error: Certificate authentication requested (with_cert=true), but no certificate provided."
+    exit 1
+  fi
+
+  if [ -n "$REMOTE_PRIVATE_KEY_CERT_FILE" ] && [ ! -f "$REMOTE_PRIVATE_KEY_CERT_FILE" ]; then
+    echo "Error: Certificate file not found at path: $REMOTE_PRIVATE_KEY_CERT_FILE"
+    exit 1
+  fi
+fi
+
 # CHECK STACK VARIABLES
 if [[ -z "${STACK_FILE}" ]]; then
   echo "Input stack_file is required!"
