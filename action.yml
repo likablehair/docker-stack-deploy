@@ -32,10 +32,19 @@ inputs:
     required: false
     default: "false"
   remote_private_key:
-    description: 'Private key used for ssh authentication'
-    required: true
+    description: 'Private key used for ssh authentication (String content)'
+    required: false 
+    default: ""
+  remote_private_key_file:
+    description: 'Path to file containing private key (Overrides remote_private_key)'
+    required: false
+    default: ""
   remote_private_key_cert:
-    description: 'Public key used for ssh authentication'
+    description: 'Public key used for ssh authentication (String content)'
+    required: false
+    default: ""
+  remote_private_key_cert_file:
+    description: 'Path to file containing public key cert (Overrides remote_private_key_cert)'
     required: false
     default: ""
   deploy_timeout:
@@ -72,7 +81,9 @@ runs:
     REMOTE_USER: ${{ inputs.remote_user }}
     WITH_CERT: ${{ inputs.with_cert }}
     REMOTE_PRIVATE_KEY: ${{ inputs.remote_private_key }}
+    REMOTE_PRIVATE_KEY_FILE: ${{ inputs.remote_private_key_file }}
     REMOTE_PRIVATE_KEY_CERT: ${{ inputs.remote_private_key_cert }}
+    REMOTE_PRIVATE_KEY_CERT_FILE: ${{ inputs.remote_private_key_cert_file }}
     REMOTE_PRIVATE_KEY_FOLDER: ${{ inputs.remote_private_key_folder }}
     DEPLOY_TIMEOUT: ${{ inputs.deploy_timeout }}
     STACK_FILE: ${{ inputs.stack_file }}
