@@ -35,7 +35,7 @@ GitHub Action and Docker image used to deploy a Docker stack on a Docker Swarm.
 | `remote_private_key` | `REMOTE_PRIVATE_KEY` | Private key used for ssh authentication. | ✅ | |
 | `remote_private_key_cert` | `REMOTE_PRIVATE_KEY_CERT` | Private key certificate used for ssh authentication. | | |
 | `deploy_timeout` | `DEPLOY_TIMEOUT` | Seconds, to wait until the deploy finishes | | **600** |
-| `stack_file` | `STACK_FILE` | Path to the stack file used in the deploy. | ✅ | |
+| `stack_file` | `STACK_FILE` | Path to the stack file used in the deploy. You can write multiple stack files separated by comma (e.g. stack1.yml,stack2.yml) for the docker merge/override | ✅ | |
 | `stack_name` | `STACK_NAME` | Name of the stack to be deployed. | ✅ | |
 | `stack_param` | `STACK_PARAM` | Additional parameter (env var) to be passed to the stack. | | |
 | `env_file` | `ENV_FILE` | Additional environment variables to be passed to the stack. | | |

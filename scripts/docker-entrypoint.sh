@@ -87,8 +87,11 @@ deploy() {
   local IFS=','
   local compose_args=()
 
-for file in ${STACK_FILE}; do
+  echo "$STACK_FILE"
+
+  for file in ${STACK_FILE}; do
     clean_file=$(echo "$file" | xargs)
+    echo "Deploy: Adding stack file ${clean_file}"
     compose_args+=("-c" "$clean_file")
   done
 
