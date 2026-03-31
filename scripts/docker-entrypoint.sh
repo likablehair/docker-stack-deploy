@@ -91,7 +91,6 @@ deploy() {
 
   for file in ${STACK_FILE}; do
     clean_file=$(echo "$file" | xargs)
-    echo "Deploy: Adding stack file ${clean_file}"
     compose_args+=("-c" "$clean_file")
   done
 
@@ -180,7 +179,6 @@ if [[ -z "${STACK_FILE}" ]]; then
 else
   old_IFS=$IFS
   IFS=','
-  echo "Stack files: ${STACK_FILE}"
   for file in ${STACK_FILE}; do
     clean_file=$(echo "$file" | xargs)
     if [ ! -f "${clean_file}" ]; then
