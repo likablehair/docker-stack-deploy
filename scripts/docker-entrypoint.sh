@@ -180,6 +180,7 @@ if [[ -z "${STACK_FILE}" ]]; then
 else
   old_IFS=$IFS
   IFS=','
+  echo "Stack files: ${STACK_FILE}"
   for file in ${STACK_FILE}; do
     clean_file=$(echo "$file" | xargs)
     if [ ! -f "${clean_file}" ]; then
