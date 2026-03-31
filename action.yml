@@ -52,7 +52,7 @@ inputs:
     required: false
     default: "600"
   stack_file:
-    description: "Path to the stack file to be used for deploy"
+    description: "Path to the stack file to be used for deploy. You can write multiple stack files separated by comma (e.g. stack1.yml,stack2.yml) for the docker merge/override"
     required: true
   stack_name:
     description: "Name of the stack to be deployed"

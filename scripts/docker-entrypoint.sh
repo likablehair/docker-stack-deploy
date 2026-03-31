@@ -84,7 +84,15 @@ connect_ssh() {
 }
 
 deploy() {
-  docker stack deploy --with-registry-auth -c "${STACK_FILE}" "${STACK_NAME}"
+  local IFS=','
+  local compose_args=()
+
+for file in ${STACK_FILE}; do
+    clean_file=$(echo "$file" | xargs)
+    compose_args+=("-c" "$clean_file")
+  done
+
+  docker stack deploy --with-registry-auth "${compose_args[@]}" "${STACK_NAME}"
 }
 
 check_deploy() {
