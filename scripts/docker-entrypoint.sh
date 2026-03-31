@@ -178,6 +178,8 @@ if [[ -z "${STACK_FILE}" ]]; then
   echo "Input stack_file is required!"
   exit 1
 else
+  old_IFS=$IFS
+  IFS=','
   for file in ${STACK_FILE}; do
     clean_file=$(echo "$file" | xargs)
     if [ ! -f "${clean_file}" ]; then
@@ -185,6 +187,7 @@ else
       exit 1
     fi
   done
+  IFS=$old_IFS
 fi
 
 if [[ -z "${STACK_NAME}" ]]; then
