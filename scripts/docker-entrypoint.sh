@@ -178,10 +178,13 @@ if [[ -z "${STACK_FILE}" ]]; then
   echo "Input stack_file is required!"
   exit 1
 else
-  if [ ! -f "${STACK_FILE}" ]; then
-    echo "${STACK_FILE} does not exist."
-    exit 1
-  fi
+  for file in ${STACK_FILE}; do
+    clean_file=$(echo "$file" | xargs)
+    if [ ! -f "${clean_file}" ]; then
+      echo "${clean_file} does not exist."
+      exit 1
+    fi
+  done
 fi
 
 if [[ -z "${STACK_NAME}" ]]; then
